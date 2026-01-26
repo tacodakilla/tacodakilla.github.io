@@ -1,24 +1,32 @@
-/* css/style.css */
-
-/* Reset some default styles */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-/* Logo Box */
+/* ==========================
+   Logo Box
+   ========================== */
 .logo-box {
     text-align: center;
     font-size: 2rem;
     font-weight: bold;
-    background-color: #222;  /* dark sleek background */
-    color: #fff;             /* white text */
+    background-color: #222;            /* dark sleek background */
+    color: #fff;                       /* white text */
     padding: 1rem 2rem;
     border-radius: 12px;
     width: fit-content;
-    margin: 1.5rem auto;     /* centers horizontally with margin on top/bottom */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* subtle shadow for 3D effect */
+    margin: 1.5rem auto;               /* centers horizontally with margin */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* subtle shadow */
+    transition: all 0.3s ease;         /* smooth hover effect */
+}
+
+.logo-box:hover {
+    background: linear-gradient(135deg, #444, #666);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+/* ==========================
+   Global Styles
+   ========================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -28,51 +36,88 @@ body {
     color: #333;
 }
 
-/* Navigation bar */
+/* ==========================
+   Navigation Bar
+   ========================== */
 nav {
     background-color: #333;
     padding: 1rem;
+    text-align: center;
 }
 
 nav a {
     color: #fff;
     text-decoration: none;
-    margin-right: 1.5rem;
+    margin: 0 1.5rem;
     font-weight: bold;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
 }
 
 nav a:hover {
+    color: #1e90ff; /* highlight on hover */
     text-decoration: underline;
 }
 
-/* Page container */
+/* ==========================
+   Page Container
+   ========================== */
 .container {
     max-width: 1000px;
     margin: 2rem auto;
     padding: 0 1rem;
 }
 
-/* Sections */
+/* ==========================
+   Sections
+   ========================== */
 section {
     margin-bottom: 2rem;
-    padding: 1rem;
+    padding: 1.5rem;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-h1, h2 {
+h1 {
     margin-bottom: 1rem;
+    font-size: 2rem;
+    color: #222;
+}
+
+h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #444;
 }
 
 p {
     margin-bottom: 1rem;
+    line-height: 1.5;
 }
 
+/* ==========================
+   Footer
+   ========================== */
 footer {
     text-align: center;
     padding: 1rem;
     background-color: #333;
     color: #fff;
     margin-top: 2rem;
+}
+
+/* ==========================
+   Responsive
+   ========================== */
+@media (max-width: 600px) {
+    nav a {
+        display: block;
+        margin: 0.5rem 0;
+    }
+
+    .logo-box {
+        font-size: 1.5rem;
+        padding: 0.8rem 1.5rem;
+    }
 }
