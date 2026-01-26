@@ -7,6 +7,20 @@
     padding: 0;
 }
 
+/* Logo Box */
+.logo-box {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    background-color: #222;  /* dark sleek background */
+    color: #fff;             /* white text */
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    width: fit-content;
+    margin: 1.5rem auto;     /* centers horizontally with margin on top/bottom */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* subtle shadow for 3D effect */
+}
+
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
