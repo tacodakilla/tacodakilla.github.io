@@ -18,6 +18,10 @@ Logo Box
     background: linear-gradient(135deg, #444, #666);
     box-shadow: 0 6px 15px rgba(0,0,0,0.3);
 }
+
+/* ==========================
+Global Styles
+========================== */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -29,6 +33,10 @@ body {
     background-color: #f5f5f5;
     color: #333;
 }
+
+/* ==========================
+Navigation
+========================== */
 nav {
     background-color: #333;
     padding: 1rem;
@@ -46,6 +54,10 @@ nav a:hover {
     color: #1e90ff;
     text-decoration: underline;
 }
+
+/* ==========================
+Layout
+========================== */
 .container {
     max-width: 1000px;
     margin: 2rem auto;
@@ -58,6 +70,10 @@ section {
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
+
+/* ==========================
+Typography
+========================== */
 h1 {
     margin-bottom: 1rem;
     font-size: 2rem;
@@ -72,6 +88,10 @@ p {
     margin-bottom: 1rem;
     line-height: 1.5;
 }
+
+/* ==========================
+Footer
+========================== */
 footer {
     text-align: center;
     padding: 1rem;
@@ -79,6 +99,76 @@ footer {
     color: #fff;
     margin-top: 2rem;
 }
+
+/* ==========================
+Portfolio Slideshows
+========================== */
+.slideshow-container {
+    position: relative;
+    max-width: 700px;
+    margin: 40px auto 10px auto;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 2px solid #333;
+    background: #000;
+}
+
+.slide {
+    display: none;
+    width: 100%;
+}
+
+.slide img {
+    width: 100%;
+    display: block;
+}
+
+/* Slideshow arrows */
+.prev,
+.next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 12px 16px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    user-select: none;
+    transition: 0.2s;
+}
+
+.prev:hover,
+.next:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+/* Project descriptions under slideshows */
+.project-description {
+    max-width: 700px;
+    margin: 10px auto 60px auto;
+    padding: 15px 20px;
+    border-left: 4px solid #444;
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.project-description h2 {
+    margin-top: 0;
+}
+
+/* ==========================
+Responsive Design
+========================== */
 @media (max-width: 600px) {
     nav a {
         display: block;
@@ -87,5 +177,8 @@ footer {
     .logo-box {
         font-size: 1.5rem;
         padding: 0.8rem 1.5rem;
+    }
+    .slideshow-container {
+        max-width: 100%;
     }
 }

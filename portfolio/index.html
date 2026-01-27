@@ -8,29 +8,117 @@
 </head>
 <body>
   <div class="logo-box">FreemanNet.org</div>
+
   <nav>
     <a href="/">Home</a>
     <a href="/about">About</a>
     <a href="/contact">Contact</a>
     <a href="/portfolio">Portfolio</a>
   </nav>
+
   <div class="container">
-    <section>
-      <h1>COMING SOON</h1>
-      <p><br>
+    <h1>Portfolio</h1>
+
+    <!-- =======================
+    PROJECT 1
+    ======================== -->
+    <div class="slideshow-container">
+      <div class="slide s1">
+        <img src="">
+      </div>
+      <div class="slide s1">
+        <img src="">
+      </div>
+      <div class="slide s1">
+        <img src="">
+      </div>
+
+      <a class="prev" onclick="changeSlide(1, -1)">&#10094;</a>
+      <a class="next" onclick="changeSlide(1, 1)">&#10095;</a>
+    </div>
+
+    <div class="project-description">
+      <h2>Project Title 1</h2>
+      <p>
+        Write your project description here. Explain what the project is, what technologies you used, and what problem it solves.
       </p>
-    </section>
-    <section>
-      <h2></h2>
-      <p></p>
-    </section>
-    <section>
-      <h2></h2>
-      <p></p>
-    </section>
+    </div>
+
+    <!-- =======================
+    PROJECT 2
+    ======================== -->
+    <div class="slideshow-container">
+      <div class="slide s2">
+        <img src="">
+      </div>
+      <div class="slide s2">
+        <img src="">
+      </div>
+      <div class="slide s2">
+        <img src="">
+      </div>
+
+      <a class="prev" onclick="changeSlide(2, -1)">&#10094;</a>
+      <a class="next" onclick="changeSlide(2, 1)">&#10095;</a>
+    </div>
+
+    <div class="project-description">
+      <h2>Project Title 2</h2>
+      <p>
+        Write your project description here.
+      </p>
+    </div>
+
+    <!-- =======================
+    PROJECT 3
+    ======================== -->
+    <div class="slideshow-container">
+      <div class="slide s3">
+        <img src="">
+      </div>
+      <div class="slide s3">
+        <img src="">
+      </div>
+      <div class="slide s3">
+        <img src="">
+      </div>
+
+      <a class="prev" onclick="changeSlide(3, -1)">&#10094;</a>
+      <a class="next" onclick="changeSlide(3, 1)">&#10095;</a>
+    </div>
+
+    <div class="project-description">
+      <h2>Project Title 3</h2>
+      <p>
+        Write your project description here.
+      </p>
+    </div>
+
   </div>
+
   <footer>
     &copy; 2026 FreemanNet.org
   </footer>
+
+  <script>
+    const slideIndex = { 1: 0, 2: 0, 3: 0 };
+
+    function showSlides(n) {
+      const slides = document.querySelectorAll(".s" + n);
+      slides.forEach(slide => slide.style.display = "none");
+      slideIndex[n] = (slideIndex[n] + slides.length) % slides.length;
+      slides[slideIndex[n]].style.display = "block";
+    }
+
+    function changeSlide(n, step) {
+      slideIndex[n] += step;
+      showSlides(n);
+    }
+
+    // Initialize slideshows
+    showSlides(1);
+    showSlides(2);
+    showSlides(3);
+  </script>
 </body>
 </html>
