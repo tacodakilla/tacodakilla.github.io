@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<p>/******************************************************************************
+ * 1) MONKEY-PATCH console.log TO HIDE NOISY LOGS
+ *****************************************************************************/
+const originalLog = console.log;
+console.log = function (...args) {
+  // Combine all arguments into one string for easy matching
+  const msg = args.map(a => (typeof a === 'object' ? JSON.stringify(a) : String(a))).join(' ');
+
+  // Hide lines containing any of these substrings
+  if (
+    msg.includes('[sendMessage] Success') ||
+    msg.includes('stream-room-messages') ||
+    msg.includes('Calling (async)') ||
+    msg.includes('received message in room') ||
+    msg.includes('received] Message in room') ||
+    msg.includes('(caching)') ||
+    msg.includes('Success: "GENERAL"') ||
+    msg.includes('getRoomIdByNameOrId') ||
+    msg.includes('"bot"') ||
+    msg.includes('"_id"') ||
+    msg.includes('Success:') // add or remove as needed
+  ) {
+    return; // Skip printing this line
+  }
+
+  // Otherwise, print as normal
+  originalLog(...args);
+};
+
+/******************************************************************************
+ * 2) SETUP: REQUIRE DEPENDENCIES & DEFINE HELPER FUNCTIONS
+ *****************************************************************************/
+const readline = require('readline');
+const { driver } = require('@rocket.chat/sdk');
+
+const SERVER = 'http://ubu1.ethan.net:3000'; // Change if desired
+const ROOM   = 'general';                   // Change if desired
+
+// Helper to prompt for user input
+function askQuestion(rl, question) {
+  return new Promise((resolve) => {
+    rl.question(question, (answer) => {
+      resolve(answer.trim());
+    });
+  });
+}
+
+/******************************************************************************
+ * 3) MAIN LOGIC: PROMPT CREDENTIALS, CONNECT, CHAT
+ *****************************************************************************/
+async function run() {
+  // Create a readline interface
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    prompt: '> '
+  });
+
+  try {
+    /*************************
+     * A) Prompt Credentials *
+     *************************/
+    const username = await askQuestion(rl, 'Username: ');
+    const password = await askQuestion(rl, 'Password: ');
+
+    /********************************************
+     * B) Connect to Rocket.Chat & Log In       *
+     ********************************************/
+    await driver.connect({ host: SERVER });
+    // driver.login() sets driver.userId internally, so we do that next:
+    await driver.login({ username, password });
+
+    // We can now retrieve the actual user ID that Rocket.Chat recognizes
+    // (This ensures we skip messages by user ID, not just by username string)
+    const userId = driver.userId; // Provided by the SDK after login
+
+    /***********************************************
+     * C) Join & Subscribe to the Desired Room     *
+     ***********************************************/
+    await driver.joinRooms([ROOM]);
+    await driver.subscribeToMessages();
+
+    // Update the CLI prompt to show the username
+    rl.setPrompt(`${username} > `);
+
+    /******************************************************
+     * D) Listen for Messages & Filter Out Own Messages  *
+     ******************************************************/
+    driver.reactToMessages((err, message) => {
+      if (err) {
+        console.error('Error receiving messages:', err);
+        return;
+      }
+      // Skip any message sent by our own user ID
+      if (message.u && message.u._id === userId) {
+        return; // No self-echo
+      }
+      // Print other users' messages
+      console.log(`\n[${message.u.username}]: ${message.msg}`);
+      rl.prompt();
+    });
+
+    /*******************************************************
+     * E) Prompt the User & Send Messages to Rocket.Chat  *
+     *******************************************************/
+    console.log(`\nConnected to "${ROOM}" on ${SERVER} as "${username}".`);
+    console.log('Type a message (or "exit" to quit).');
+    rl.prompt();
+
+    rl.on('line', async (input) => {
+      if (input.toLowerCase() === 'exit') {
+        console.log('Exiting...');
+        await driver.disconnect();
+        rl.close();
+        return;
+      }
+      // Send typed message to the room (no self-echo)
+      await driver.sendToRoom(input, ROOM);
+      rl.prompt();
+    });
+
+  } catch (error) {
+    console.error('Error:', error);
+    process.exit(1);
+  }
+}
+
+run();</p>
+  <footer>
+    &copy; 2026 FreemanNet.org
+  </footer>
+</body>
+</html>
